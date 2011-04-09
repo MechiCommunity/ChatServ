@@ -53,6 +53,7 @@ Module server
     Sub Main()
         If IO.File.Exists("config.ini") = False Then
             MsgBox("config.ini doesn't exist!", MsgBoxStyle.Critical, "config missing")
+			End
         End If
         If ConsoleSpecialKey.ControlC Then
             End
