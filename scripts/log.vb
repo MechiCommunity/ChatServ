@@ -1,9 +1,8 @@
 ﻿Public Class log
-    Public Sub LogMessage(ByVal Message As String, Optional ByVal LogFileName As String = "")
-        LogFileName = "server_" + Date.Today + ".log"
+    Public Sub LogMessage(ByVal Message As String, ByVal LogFileName As String)
 
         Try
-            Dim oStream As IO.StreamWriter = System.IO.File.AppendText(LogFileName)
+            Dim oStream As IO.StreamWriter = System.IO.File.AppendText(LogFileName + ".log")
             oStream.WriteLine(Message)
 
             oStream.Close()

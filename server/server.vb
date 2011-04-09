@@ -60,22 +60,22 @@ Module server
         Console.ForegroundColor = ConsoleColor.Green
         Console.Title = "ChatServ Server"
         Console.WriteLine("# Chat-Server Revision: " & _REVISION)
-        scriptslog.LogMessage("# Chat-Server Revision: " + _REVISION, )
+        scriptslog.LogMessage("# Chat-Server Revision: " + _REVISION, "server")
         Console.WriteLine("# <CTRL-C>")
-        scriptslog.LogMessage("# <CTRL-C>")
+        scriptslog.LogMessage("# <CTRL-C>", "server")
         Console.WriteLine("# © Mechi Community")
-        scriptslog.LogMessage("# © Mechi Community")
-        Console.WriteLine("# Commandstring is " + config_cmd)
-        scriptslog.LogMessage("# Commandstring is " + config_cmd)
+        scriptslog.LogMessage("# © Mechi Community", "server")
+        Console.WriteLine("# Commandstring is " + config_cmd, "server")
+        scriptslog.LogMessage("# Commandstring is " + config_cmd, "server")
         Console.WriteLine("# Loaded at " & time)
-        scriptslog.LogMessage("# Loaded at " & time)
+        scriptslog.LogMessage("# Loaded at " & time, "server")
         server = New TcpListener(ipendpoint)
         server.Start()
         Console.WriteLine("# Listening on " & config_ip & ":" & config_port)
-        scriptslog.LogMessage("# Listening on " & config_ip & ":" & config_port)
+        scriptslog.LogMessage("# Listening on " & config_ip & ":" & config_port, "server")
         My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
         Console.WriteLine("*******************************************************************************")
-        scriptslog.LogMessage("*******************************************************************************")
+        scriptslog.LogMessage("*******************************************************************************", "server")
         Console.ForegroundColor = ConsoleColor.Cyan
         While True
             client = server.AcceptTcpClient
@@ -90,7 +90,7 @@ Module server
             Console.ForegroundColor = ConsoleColor.Red
             SendToAllClients("Has joined: " & c.nick & ". Client Revision: " & c.rev)
             Console.WriteLine("#" & time & " " & c.nick & " has joined with Client Revision: " + c.rev)
-            scriptslog.LogMessage("#" & time & " " & c.nick & " has joined with Client Revision: " + c.rev)
+            scriptslog.LogMessage("#" & time & " " & c.nick & " has joined with Client Revision: " + c.rev, "server")
             Console.ForegroundColor = ConsoleColor.Cyan
 
             Dim t As New Threading.Thread(AddressOf ListenToConnection)
@@ -111,36 +111,36 @@ Module server
                             SendToAllClients("--> " & Kickname & " is kicked.")
                             Sendtoperson("/kicked", Kickname)
                             Console.WriteLine("*" & time & " " & Kickname & " is kicked!")
-                            scriptslog.LogMessage("*" & time & " " & Kickname & " is kicked!")
+                            scriptslog.LogMessage("*" & time & " " & Kickname & " is kicked!", "server")
                             list.Remove(Connection)
                             Exit For
                         End If
                     Next
                 ElseIf tmp.StartsWith(config_cmd & "shutdown") And config_admpwd = con.pwd Then
                     Console.ForegroundColor = ConsoleColor.Yellow
-                    scriptslog.LogMessage("***Server shutdown by " + con.nick + "****")
+                    scriptslog.LogMessage("***Server shutdown by " + con.nick + "****", "server")
                     End
                 ElseIf tmp.StartsWith(config_cmd + "announce") And config_admpwd = con.pwd Then
                     Console.ForegroundColor = ConsoleColor.Cyan
                     Console.WriteLine("!" + time & " " & tmp.Replace(config_cmd + "announce", "Announce by " + con.nick + ":"))
-                    scriptslog.LogMessage("!" + time & " " & tmp.Replace(config_cmd + "announce", "Announce by " + con.nick + ":"))
+                    scriptslog.LogMessage("!" + time & " " & tmp.Replace(config_cmd + "announce", "Announce by " + con.nick + ":"), "server")
                     SendToAllClients(tmp.Replace(config_cmd + "announce", "Announce by " + con.nick + ":"))
                 ElseIf tmp.StartsWith("!afk") Then
                     Console.ForegroundColor = ConsoleColor.Yellow
                     Console.WriteLine("#" & time & " " & con.nick & " is AFK right now")
-                    scriptslog.LogMessage("#" + time + " " + con.nick + " is AFK right now")
+                    scriptslog.LogMessage("#" + time + " " + con.nick + " is AFK right now", "server")
                     SendToAllClients(con.nick & " is AFK right now")
                 ElseIf tmp.StartsWith("!notafk") Then
                     Console.ForegroundColor = ConsoleColor.Yellow
                     Console.WriteLine("#" & time & " " & con.nick & " is not longer AFK")
-                    scriptslog.LogMessage("#" + time + " " + con.nick + " is not longer AFK")
+                    scriptslog.LogMessage("#" + time + " " + con.nick + " is not longer AFK", "server")
                     SendToAllClients(con.nick & " is not longer AFK")
                 ElseIf tmp.StartsWith("#admin") And Not tmp.Contains(" ") Then
                     con.pwd = con.streamr.ReadLine
                     If con.pwd = config_admpwd Then
                         Console.ForegroundColor = ConsoleColor.Yellow
                         Console.WriteLine(time & " " & con.nick & " has been identified as Admin")
-                        scriptslog.LogMessage("*** " + time + " " + con.nick + " has been identified as Admin")
+                        scriptslog.LogMessage("*** " + time + " " + con.nick + " has been identified as Admin", "server")
                         SendToAllClients(con.nick + " has been identified as Admin")
                     Else
 
@@ -150,7 +150,7 @@ Module server
                     SendToAllClients("--> " & con.nick & " is kicked by Server.")
                     Sendtoperson("/kicked", con.nick)
                     Console.WriteLine("*" & time & " " & con.nick & " was kicked by Server!")
-                    scriptslog.LogMessage("*" & time & " " & con.nick & " was kicked by Server!")
+                    scriptslog.LogMessage("*" & time & " " & con.nick & " was kicked by Server!", "server")
                 ElseIf tmp.StartsWith(config_cmd + "w") Then
                     'Feature under Development
                 ElseIf tmp.Contains("hure") Then
@@ -161,7 +161,7 @@ Module server
                 Else
                     Console.ForegroundColor = ConsoleColor.Cyan
                     Console.WriteLine(time & " " & con.nick & ": " & tmp)
-                    scriptslog.LogMessage(time & " " & con.nick & ": " & tmp)
+                    scriptslog.LogMessage(time & " " & con.nick & ": " & tmp, "server")
                     SendToAllClients(con.nick & ": " & tmp)
                 End If
             Catch
@@ -169,7 +169,7 @@ Module server
                 Console.ForegroundColor = ConsoleColor.Red
                 SendToAllClients("Has exited: " & con.nick)
                 Console.WriteLine("#" & time & " " & con.nick & " has exited.")
-                scriptslog.LogMessage("#" & time & " " & con.nick & " has exited.")
+                scriptslog.LogMessage("#" & time & " " & con.nick & " has exited.", "server")
                 Exit Do
             End Try
         Loop

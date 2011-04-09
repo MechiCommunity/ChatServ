@@ -5,6 +5,7 @@ Imports System.Net.Sockets
 Imports System.IO
 
 Public Class chat
+    Dim log As scripts.log = New scripts.log()
     Private stream As NetworkStream
     Private streamw As StreamWriter
     Private streamr As StreamReader
@@ -14,6 +15,7 @@ Public Class chat
     Private nick As String = "unknown"
     Private ip As String = "unknown"
     Private port As String = "unknown"
+    Private art As String = "client"
     Private rev As String = My.Application.Info.Version.Build.ToString
     Private pwd As String = ""
 
@@ -58,6 +60,7 @@ Public Class chat
             Application.Exit()
         End If
         ListBox1.Items.Add(s)
+        log.LogMessage(s, art)
         With ListBox1
             .TopIndex += 1
         End With
@@ -88,7 +91,7 @@ Public Class chat
             streamw.Flush()
             TextBox1.Clear()
         ElseIf TextBox1.Text = "#info" Then
-            MessageBox.Show("ChatServ Chatclient by Mechi Community Revision ID: " + My.Application.Info.Version.Revision.ToString + " Build ID: " + My.Application.Info.Version.Build.ToString, "Info", MessageBoxButtons.OK, MessageBoxIcon.Question)
+            MessageBox.Show("ChatServ Chatclient by Mechi Community" + vbNewLine + "Revision ID: " + My.Application.Info.Version.Revision.ToString + vbNewLine + "Build ID: " + My.Application.Info.Version.Build.ToString, "Info", MessageBoxButtons.OK, MessageBoxIcon.Question)
         Else
             streamw.WriteLine(TextBox1.Text)
             streamw.Flush()
