@@ -6,8 +6,8 @@ Imports System.IO
 Imports System.Net
 
 Module server
-    Dim scriptslog As scripts.log = New scripts.log()
-    Dim conf As scripts.conf = New scripts.conf()
+    Dim scriptslog As log = New log()
+    Dim conf As conf = New conf()
     Dim time As String = Date.Now
     Dim port As String
     Dim _REVISION As String = My.Application.Info.Version.Revision.ToString
@@ -156,14 +156,14 @@ Module server
                     'Feature under Development
                 ElseIf tmp.Contains("hure") Then
                     'Feature under Development
-                ElseIf tmp.StartsWith(config_cmd + "online") Then
-                    OnlineList("OnlineListe")
+                ElseIf tmp.StartsWith("!online") Then
+                    'Feature in Development
                     Console.WriteLine("Requested Onlinelist")
                 Else
-                    Console.ForegroundColor = ConsoleColor.Cyan
-                    Console.WriteLine(time & " " & con.nick & ": " & tmp)
-                    scriptslog.LogMessage(time & " " & con.nick & ": " & tmp, "server")
-                    SendToAllClients(con.nick & ": " & tmp)
+                        Console.ForegroundColor = ConsoleColor.Cyan
+                        Console.WriteLine(time & " " & con.nick & ": " & tmp)
+                        scriptslog.LogMessage(time & " " & con.nick & ": " & tmp, "server")
+                        SendToAllClients(con.nick & ": " & tmp)
                 End If
             Catch
                 list.Remove(con)

@@ -3,9 +3,10 @@
 
 Imports System.Net.Sockets
 Imports System.IO
+Imports System.Net
 
 Public Class chat
-    Dim log As scripts.log = New scripts.log()
+    Dim log As log = New log()
     Private stream As NetworkStream
     Private streamw As StreamWriter
     Private streamr As StreamReader
@@ -18,6 +19,7 @@ Public Class chat
     Private art As String = "client"
     Private rev As String = My.Application.Info.Version.Build.ToString
     Private pwd As String = ""
+	Private WithEvents httpclient As WebClient
 
     Private Sub Form1_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
         Try
